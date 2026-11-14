@@ -11,10 +11,13 @@ for an unattended pilot. Details are in [Results](#results).
 ## What is inside
 
 ```
-project/
-  README.md              # this file: results, how to run
-  filmoskop_rag.ipynb    # the whole pipeline in six stages
-  data/                  # filmoskop_kb.json and generated artifacts (not in git)
+README.md              # this file: results, how to run
+filmoskop_rag.ipynb    # the whole pipeline in six stages
+pyproject.toml         # dependencies, pinned to the versions the results were obtained with
+uv.lock                # full lock file for uv
+.env.example           # names of the environment variables
+data/
+  filmoskop_kb.json    # knowledge base and labelled test queries
 ```
 
 The notebook walks through six stages, each ending with a short written conclusion:
@@ -115,18 +118,24 @@ paraphrases, `multi` needing two sections, `gap` with no answer in the base), th
 sections (`relevant_docs`) and a `gold` fact the answer must convey. Relevance is labelled at section level,
 so the labels survive any re-chunking; retrieval metrics map found chunks back to their source sections.
 
-The `data/` folder is not in git. The notebook writes its own artifacts there: the cleaned corpus, the
-chunks and their vectors.
+Only this file is in git. The notebook writes its own artifacts next to it: the cleaned corpus, the chunks
+and their vectors.
 
 ## How to run
 
 Everything runs locally on a Mac (Apple M4 Pro, 24 GB, MPS); no GPU box is required.
 
-1. Python 3.13 environment managed by uv from the repository root (`uv sync`). Key packages:
-   `langchain-core`, `langchain-huggingface`, `langchain-qdrant`, `langchain-openai`,
+1. Create the Python 3.13 environment with uv in the repository root:
+
+   ```bash
+   uv sync
+   ```
+
+   Key packages: `langchain-core`, `langchain-huggingface`, `langchain-qdrant`, `langchain-openai`,
    `langchain-text-splitters`, `qdrant-client`, `sentence-transformers`, `pandas`, `matplotlib`,
-   `beautifulsoup4`, `pydantic`.
-2. Put `filmoskop_kb.json` into `data/`.
+   `beautifulsoup4`, `pydantic`. Open the notebook with the interpreter from `.venv`.
+2. Optional: copy `.env.example` to `.env` and set `HF_TOKEN`. The models are public, the token only raises
+   the download rate limit.
 3. Start a local OpenAI-compatible LLM server. The notebook uses `Qwen3.5-4B` (GGUF, Q4_K_M, about 2.7 GB)
    through llama.cpp on Metal:
 
@@ -141,7 +150,7 @@ Everything runs locally on a Mac (Apple M4 Pro, 24 GB, MPS); no GPU box is requi
    `chat_template_kwargs`). Another OpenAI-compatible server works by changing `LLM_URL`, provided it
    supports JSON-schema constrained output: the judge relies on it.
 4. Embedder `intfloat/multilingual-e5-base` and reranker `BAAI/bge-reranker-v2-m3` run on MPS; weights are
-   downloaded from Hugging Face on first use (`HF_TOKEN` is read from `.env`).
+   downloaded from Hugging Face on first use (about 3.2 GB together).
 5. Run the notebook top to bottom. The two evaluation cells of stage 6 call the LLM a few hundred times and
    take about 15 minutes together.
 

@@ -1,0 +1,70 @@
+[project]
+name = "filmoskop-rag"
+version = "0.1.0"
+description = "Retrieval-augmented support assistant for a fictional streaming service"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4==4.15.0",
+    "langchain-core==1.7.4",
+    "langchain-huggingface==1.2.3",
+    "langchain-openai==1.7.3",
+    "langchain-qdrant==1.1.0",
+    "langchain-text-splitters==1.1.3",
+    "lxml==6.1.3",
+    "matplotlib==3.11.2",
+    "numpy==2.5.3",
+    "pandas==3.1.0",
+    "pydantic==2.14.2",
+    "python-dotenv==1.2.4",
+    "qdrant-client==1.20.0",
+    "sentence-transformers==6.2.0",
+    "torch==2.15.0",
+    "transformers==5.22.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel==7.4.0",
+    "ipywidgets==8.1.9",
+]
+
+[tool.uv]
+package = false
+# Transitive packages held at the versions of the environment the results were obtained in.
+constraint-dependencies = [
+    "annotated-doc==0.0.5",
+    "anyio==4.15.1",
+    "click==8.5.0",
+    "executing==2.2.1",
+    "filelock==4.0.9",
+    "fonttools==4.66.1",
+    "fsspec==2026.7.0",
+    "hf-xet==1.6.0",
+    "httpcore2==2.13.1",
+    "httpx2==2.13.1",
+    "ipython==9.17.1",
+    "jedi==0.20.0",
+    "jiter==0.17.0",
+    "jsonpatch==1.42",
+    "jsonpointer==3.8",
+    "langchain-protocol==0.0.20",
+    "markdown-it-py==4.2.0",
+    "nest-asyncio2==1.7.3",
+    "openai==3.42.0",
+    "pillow==12.3.0",
+    "platformdirs==4.12.2",
+    "python-dateutil==2.9.0.post0",
+    "pyzmq==27.2.0",
+    "regex==2026.9.29",
+    "setuptools==84.0.0",
+    "soupsieve==3.0.4",
+    "threadpoolctl==3.7.0",
+    "tokenizers==0.23.2",
+    "tornado==6.5.10",
+    "truststore==0.10.4",
+    "typer==0.27.2",
+    "typing-inspection==0.4.4",
+    "wcwidth==0.9.1",
+    "xxhash==4.0.2",
+]
